@@ -11,7 +11,19 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    Followers: [String],
+    ImageUrl:{
+        type:String,
+        default:""
+    },
+    Followers: {
+        type:Array,
+        default:[]
+    },
+    Following:{
+        type:Array,
+        default:[]
+
+    },
     liked: {
         type: Array,
         default: []
