@@ -1,6 +1,7 @@
 import mongoose, { Mongoose } from "mongoose";
 
-const MONGODB_URL = process.env.MONGODB_URL!;
+const MONGODB_URL:any = process.env.MONGODB_URL;
+
 
 interface MongooseConn {
   conn: Mongoose | null;
@@ -17,12 +18,13 @@ if (!cached) {
 }
 
  const connectiontodb = async () => {
+  console.log(MONGODB_URL);
   try{  if (cached.conn) return cached.conn;
 
     cached.promise =
       cached.promise ||
       mongoose.connect(MONGODB_URL, {
-        dbName: "clerk-next14-db",
+        dbName: "jtube",
         bufferCommands: false,
         connectTimeoutMS: 30000,
       });
