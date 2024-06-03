@@ -8,6 +8,7 @@ import React from 'react'
 import { RadioTower } from 'lucide-react';
 import { ModeToggle } from './Toggle'
 import ThemeImage from './ThemeImage'
+import { Separator } from './ui/separator'
 const Header = async () => {
     const user = await currentUser()
 
@@ -50,17 +51,25 @@ const Header = async () => {
 
                     <ModeToggle />
                 </> : <>
-                    <Link href={"/sign-in"}>
+
+                    <div className="flex items-center gap-1">
+                        <Link href={"/sign-in"}>
 
 
-                        <button className='px-5 py-2 bg-black dark:bg-pink-600 dark:hover:bg-pink-600/75 font-semibold text-sm hover:bg-black/75 transition rounded-md text-slate-50'>Sign In</button>
-                    </Link>
+                            <button className='p-2    font-semibold text-sm transition 
+                             hover:opacity-75 shadow-sm '>Sign In</button>
+                        </Link>
+                        <Separator orientation='vertical' className='my-2' />
 
-                    <Link href={"/sign-up"}>
-                        <button className='px-5 py-2 bg-black dark:bg-pink-600  dark:hover:bg-pink-600/75 font-semibold text-sm hover:bg-black/75 transition rounded-md text-slate-50'>Sign Up</button>
+                        <Link href={"/sign-up"}>
+                            <button className='p-2    font-semibold text-sm transition 
+                             hover:opacity-75 shadow-sm '>Sign Up</button>
 
-                    </Link>
-                    <ModeToggle />
+                        </Link>
+                        <ModeToggle />
+
+                    </div>
+
                 </>}
 
 
