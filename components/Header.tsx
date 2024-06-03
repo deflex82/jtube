@@ -2,7 +2,7 @@
 import { UserButton, } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
 import { Menu, Search, Upload } from 'lucide-react'
-import Image from 'next/image'
+
 import Link from 'next/link'
 import React from 'react'
 import { RadioTower } from 'lucide-react';
@@ -57,13 +57,13 @@ const Header = async () => {
 
 
                             <button className='p-2    font-semibold text-sm transition 
-                             hover:opacity-75 shadow-sm '>Sign In</button>
+                             hover:opacity-75 hover:shadow-sm '>Sign In</button>
                         </Link>
                         <Separator orientation='vertical' className='my-2' />
 
                         <Link href={"/sign-up"}>
                             <button className='p-2    font-semibold text-sm transition 
-                             hover:opacity-75 shadow-sm '>Sign Up</button>
+                             hover:opacity-75 hover:shadow-sm '>Sign Up</button>
 
                         </Link>
                         <ModeToggle />

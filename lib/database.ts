@@ -17,19 +17,25 @@ if (!cached) {
 }
 
  const connectiontodb = async () => {
-  if (cached.conn) return cached.conn;
+  try{  if (cached.conn) return cached.conn;
 
-  cached.promise =
-    cached.promise ||
-    mongoose.connect(MONGODB_URL, {
-      dbName: "clerk-next14-db",
-      bufferCommands: false,
-      connectTimeoutMS: 30000,
-    });
+    cached.promise =
+      cached.promise ||
+      mongoose.connect(MONGODB_URL, {
+        dbName: "clerk-next14-db",
+        bufferCommands: false,
+        connectTimeoutMS: 30000,
+      });
+  
+    cached.conn = await cached.promise;
+  
+    return cached.conn;
 
-  cached.conn = await cached.promise;
+  }
+  catch(err){
+    console.log(err);
+  }
 
-  return cached.conn;
 }
 
 export default connectiontodb;
