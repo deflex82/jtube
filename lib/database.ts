@@ -1,20 +1,35 @@
-import mongoose from "mongoose";
-const uri:any = process.env.MONGODB_URI
-const connectiontodb  =async()=>{
-    if(mongoose.connections[0].readyState){
-        return true;
-    }
-    try{
-        await mongoose.connect(uri);
-        console.log("Succesfully connected to database");
-        return true;
-       
+import mongoose, { Mongoose } from "mongoose";
 
-    }
-    catch(err){
-        console.log(err);
-        return false;
-    }
+const MONGODB_URL = process.env.MONGODB_URL!;
+
+interface MongooseConn {
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
+}
+
+let cached: MongooseConn = (global as any).mongoose;
+
+if (!cached) {
+  cached = (global as any).mongoose = {
+    conn: null,
+    promise: null,
+  };
+}
+
+ const connectiontodb = async () => {
+  if (cached.conn) return cached.conn;
+
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(MONGODB_URL, {
+      dbName: "clerk-next14-db",
+      bufferCommands: false,
+      connectTimeoutMS: 30000,
+    });
+
+  cached.conn = await cached.promise;
+
+  return cached.conn;
 }
 
 export default connectiontodb;
