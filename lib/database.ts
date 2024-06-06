@@ -1,6 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
 
-const MONGODB_URL:any = process.env.MONGODB_URL;
 
 
 interface MongooseConn {
@@ -18,6 +17,8 @@ if (!cached) {
 }
 
  const connectiontodb = async () => {
+  
+const MONGODB_URL:any = process.env.MONGODB_URL;
   console.log(MONGODB_URL);
   try{  if (cached.conn) return cached.conn;
 
