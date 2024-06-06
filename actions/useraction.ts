@@ -8,6 +8,7 @@ export default async function CreateUser(user:any){
     try{
         await connectiontodb();
         const newUser = User.create(user);
+        console.log(newUser);
         return JSON.parse(JSON.stringify(newUser));
 
     }
