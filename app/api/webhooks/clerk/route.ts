@@ -73,6 +73,8 @@ export async function POST(req: Request) {
                   userId:newuser._id
               }
           })
+      }else{
+        console.log("user not created");
       }
       return NextResponse.json({message:"New User Created",user:newuser})
 
@@ -82,6 +84,7 @@ export async function POST(req: Request) {
 
  
   }
+
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
   console.log('Webhook body:', body)
 

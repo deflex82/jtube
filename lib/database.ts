@@ -31,6 +31,7 @@ const MONGODB_URL:any = process.env.MONGODB_URL;
       });
   
     cached.conn = await cached.promise;
+    console.log(cached.conn)
   
     return cached.conn;
 
