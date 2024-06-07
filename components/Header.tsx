@@ -22,8 +22,17 @@ const Header = async () => {
 
                     <div className="flex items-center gap-1">
                         <ThemeImage />
+                        <div className="flex items-center gap-2">
                         <h1 className='font-mono font-semibold text-2xl text-pink-600'>Jtube</h1>
+                        <div className=" lg:hidden flex items-center justify-center">
+                        {user && <UserButton afterSignOutUrl='/'/>}
 
+                        </div>
+
+
+
+                        </div>
+                      
                     </div>
 
                 </Link>
@@ -37,10 +46,14 @@ const Header = async () => {
             </div>
             <div className="flex-[0.2] hidden lg:flex items-center gap-8 justify-end cursor-pointer ">
                 {user ? <>
-                    <div className="flex flex-col gap-1 items-center group">
+                <Link href={"/upload"}>
+                <div className="flex flex-col gap-1 items-center group">
                         <Upload className='group-hover:font-bold group-hover:text-pink-600 ' />
                         <p className='group-hover:font-semibold group-hover:text-pink-600 text-sm'>upload</p>
                     </div>
+
+                </Link>
+                   
                     <div className="flex flex-col gap-1 items-center justify-center group">
                         <RadioTower className='group-hover:font-bold group-hover:text-pink-600 ' />
                         <p className='group-hover:font-semibold group-hover:text-pink-600 text-sm'>live</p>
