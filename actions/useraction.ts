@@ -7,7 +7,7 @@ export default async function CreateUser(user:any){
     console.log("about to create mongodb")
     try{
         await connectiontodb();
-        const newUser = User.create(user);
+        const newUser = await User.create(user);
         console.log(newUser);
         return JSON.parse(JSON.stringify(newUser));
 
