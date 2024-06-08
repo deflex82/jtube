@@ -33,9 +33,9 @@ function MyDropzone({image,setImage}:any) {
       ) : (
         <div className='p-4 border  border-[rgba(69,63,63,0.86)]'>
           <div {...getRootProps()}>
-            <input name='image' {...getInputProps()} />
+            <input type='file' onChange={e=>setImage(e.target.value)} name='image' {...getInputProps()} />
             {isDragActive ?
-              <p>Drop the files here ...</p> :
+              <p>Drop the image here ...</p> :
               <div className='flex flex-col gap-2 items-center'>
                
                   <Upload />

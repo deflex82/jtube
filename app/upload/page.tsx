@@ -1,109 +1,198 @@
 "use client";
-import DropZone from '@/components/DropZone';
+
 import React, { useEffect, useState } from 'react'
 
-import VideoDropzone from '@/components/VideoZone';
+
 import { cn } from '@/lib/utils';
-import { createVideo } from '@/actions/Videoaction';
+import { uploadaction } from '@/actions/Videoaction';
+
+import { Button } from '@/components/FormButton';
+import { UploadCloudIcon, Video } from 'lucide-react';
+import Image from 'next/image';
+import { useToast } from '@/components/ui/use-toast';
+
+
 
 const Upload = () => {
-  const [image, setImage] = useState<File | undefined>();
-  const [video, setVideo] = useState<File | undefined>();
-  const [isready,setready] = useState<Boolean>(false);
-  const [tags,setTags]=useState<string>("") ;
-  const [title,setTitle] = useState<string>("");
-  const [loading,setISloading] = useState<Boolean>(false);
-  const [Error,setError] = useState(null);
+  
+  const [video, setVideo] = useState<any>(null);
+  const [isready, setready] = useState<Boolean>(false);
+  const [tags, setTags] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
 
-  useEffect(()=>{
+  const [loading,setloading] = useState<Boolean>(false);
+  const [img,setImage] = useState<any>(null);
 
-    if(image && video && tags && title){
+
+
+
+
+  useEffect(() => {
+
+    if ( video && tags && title && img) {
       setready(true);
     }
-    else{
+    else {
       setready(false);
     }
 
-  },[video,image,tags,title])
+  }, [video,  tags, title,img])
 
-    //  const createVideo = (e:any)=>{
-    //   e.preventDefault();
-    //   if (!image || !video || !tags || !title) return;
-    
+  
+
+const handleSubmit = async (e: any) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('vid', video);
+  formData.append('tags', tags);
+  formData.append('title', title);
+  formData.append('img',img);
+  
+
+  try {
+    console.log(formData);
+    setloading(true);
+    await uploadaction(formData); // Make sure uploadaction handles FormData
+    setloading(false);
+    toast({
+      title:"Your video has been uploaded succesfully",
+      description:"please visit your profile tag to see uploaded videos."
+    })
+  } catch (error:any) {
+    alert('Upload failed');
+    setloading(false);
+    toast({
+      title: "Some error occurred",
+      description: `${error.message || error}`
+    });
+  
+  }
+};
 
 
-    //    let formData = new FormData();
-    //    formData.append("video", video);
-    //    formData.append("image", image);
-    //    formData.append("tags", tags);
-    //    formData.append("title", title);
-   
-    //    setISloading(true);
-    //    setError(null);
-    //    createVideo(formData);
+
+const { toast } = useToast()
+
+return (
+  <div className='w-full p-4 '>
+    <div className="max-w-4xl mx-auto  h-full">
+      <form onSubmit={handleSubmit} >
        
+        
+        
 
-    //   setISloading(true);
 
-    //  }
 
-  return (
-    <div className='w-full p-4 '>
-      <div className="max-w-5xl mx-auto  h-full">
-        <form  action={createVideo} >
 
-    
         <h2 className='text-xl font-semibold my-3'>Upload Video</h2>
 
-      
-          <div className="flex flex-col gap-4">
 
-            <div className="flex flex-col gap-2">
-              <h3>Source</h3>
-              <VideoDropzone video={video} setVideo={setVideo} />
+        <div className="flex flex-col gap-4">
+
+          <div className="flex flex-col gap-2">
+            <h3>Source</h3>
 
 
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3>Thumbnail</h3>
-              <DropZone image={image} setImage ={setImage} />
+            {
+              !video ? <>
+              
+                <label  className='flex items-center flex-col gap-2 p-4 border border-neutral-200' htmlFor="fileId">
+                  <Video />
+                  <p>upload your video</p>
 
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3>Title</h3>
-              <input name='title' value={title} onChange={e=>setTitle(e.target.value)} className='bg-transparent w-full p-2 border outline-none font-semibold  border-[rgba(69,63,63,0.86)]' type='text' />
+                  <input onChange={(e:any)=>setVideo(e.target.files[0])} accept='video/*' name='vid' className='hidden'  type="file" id="fileId" />
 
-            </div>
-            <div className="flex flex-col gap-2">
+                </label>
+              </> : <>
+              <div className='w-full' >
+              <video width={400} muted controls>
+            <source src={URL.createObjectURL(video)}   />
+            Your browser does not support HTML video.
+          </video>
+          <button  className='text-gray-600 p-2' onClick={()=>{setVideo(undefined)}}>Remove Video</button>
+
+
+              </div>
+           
+              </>
+            }
+
+
+
+
+          </div>
+          <div className="flex flex-col gap-2">
+            <h3>Thumbnail</h3>
+
+
+            {
+              !img ? <>
+              
+                <label  className='flex items-center flex-col gap-2 p-4 border border-neutral-200' htmlFor="imgId">
+                  <UploadCloudIcon />
+                  <p>upload your Thumbnail</p>
+
+                  <input onChange={(e:any)=>setImage(e.target.files[0])} accept='image/*' name='img' className='hidden'  type="file" id="imgId" />
+
+                </label>
+              </> : <>
+              <div className='w-full' >
+              
+                <Image alt='thumbnail' height={400} width={400} src={URL.createObjectURL(img)}/>
+       
+          <button  className='text-gray-600 p-2' onClick={()=>{setImage(undefined)}}>Remove Image</button>
+
+
+              </div>
+           
+              </>
+            }
+
+
+
+
+          </div>
+       
+          <div className="flex flex-col gap-2">
+            <h3>Title</h3>
+            <input name='title' value={title} onChange={e => setTitle(e.target.value)} className='bg-transparent w-full p-2 border outline-none font-semibold  border-[rgba(69,63,63,0.86)]' type='text' />
+
+          </div>
+          <div className="flex flex-col gap-2">
             <h3>Tags(*seperate each tags with comma)</h3>
-            <input name="tags" value={tags} onChange={e=>setTags(e.target.value)} placeholder='example:Funny,Educational' type='text'  className='bg-transparent w-full p-2 border outline-none font-semibold  border-[rgba(69,63,63,0.86)]'/>
+            <input name="tags" value={tags} onChange={e => setTags(e.target.value)} placeholder='example:Funny,Educational' type='text' className='bg-transparent w-full p-2 border outline-none font-semibold  border-[rgba(69,63,63,0.86)]' />
           </div>
 
 
-          </div>
-
-      
-
-                   <div className="flex items-center gap-2">
-                   <button className={cn('bg-pink-600 text-slate-100 px-3 py-2 rounded-sm hover:opacity-90 text-sm mt-4 transition cursor-pointer',`${isready?"":"pointer-events-none bg-gray-600"}`)}>Upload</button>
-                   <p className='inline-block text-red-600 font-semibold text-sm'>*You need to complete above input fields to upload a video</p>
-
-                   </div>
-        
-          </form>
-
-   
-     
+        </div>
 
 
 
+        <div className="flex items-center gap-2">
+          <Button isready={isready}>
+            {loading ?"uploading......":"upload"}
+          </Button>
+
+          <p className={cn('inline-block text-red-600 font-semibold text-sm ', `${isready ? "hidden" : ""}`)}>*You need to complete above input fields to upload a video</p>
+          <p className={cn('inline-block text-red-600 font-semibold text-sm ', `${loading ? "" : "hidden"}`)}>*please wait,your video is uploading ,this might take few minutes.</p>
+
+
+        </div>
+
+      </form>
 
 
 
-      </div>
+
+
+
+
+
 
     </div>
-  )
+
+  </div>
+)
 }
 
 export default Upload;

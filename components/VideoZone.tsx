@@ -37,9 +37,9 @@ function VideoDropzone({ video, setVideo }: VideoDropzoneProps) {
       ) : (
         <div className="p-4 border border-[rgba(69,63,63,0.86)]">
           <div {...getRootProps()} className="flex flex-col gap-2 items-center cursor-pointer">
-            <input name="video" {...getInputProps()} />
+            <input type='file'  name="video" {...getInputProps()} />
             {isDragActive ? (
-              <p>Drop the files here ...</p>
+              <p>Drop the video here ...</p>
             ) : (
               <div className="flex flex-col gap-2 items-center">
                 <Video />

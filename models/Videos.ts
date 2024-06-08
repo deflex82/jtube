@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const VideoSchema = new mongoose.Schema({
-    ChannelId:{
+    clerkId:{
         type:String,
         required:true
     },
@@ -16,6 +16,14 @@ const VideoSchema = new mongoose.Schema({
     Thumbnail:{
         type:String,
         default:""
+    },
+    tags:{
+        type:String,
+        default:""
+    },
+    title:{
+        type:String,
+        required:true
     }
 },{
     timestamps:true
