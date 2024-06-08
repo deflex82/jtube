@@ -59,7 +59,7 @@ const Header = async () => {
                         <p className='group-hover:font-semibold group-hover:text-pink-600 text-sm'>live</p>
                     </div>
 
-                    <UserButton afterSignOutUrl='/' />
+                    <UserButton  afterSignOutUrl='/' />
 
 
                     <ModeToggle />
