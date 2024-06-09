@@ -40,6 +40,7 @@ const page = () => {
     <div>
         <form action={trial}>
             <input type='file' name='trial'/>
+            <input type='file' name='trial2'/>
             <button>try</button>
 
         </form>
