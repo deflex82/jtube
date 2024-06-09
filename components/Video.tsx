@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
 import { format } from 'timeago.js';
-import extractDate from "./../lib/formatteddate"
+import extractDate, { timeAgo } from "./../lib/formatteddate"
 import formatDuration from '@/lib/formatduration';
 const Video = ({details}:any) => {
   
@@ -25,7 +25,7 @@ const Video = ({details}:any) => {
             {details?.views} views
             ---
         
-            <p>{format(extractDate(details?.createdAt))}</p>
+            <p>{timeAgo(details?.createdAt)}</p>
             <div className="absolute right-0 text-slate-100  px-3 text-sm font-bold bg-pink-600 rounded-sm ">{formatDuration(details?.duration)}</div>
         </div>
 
