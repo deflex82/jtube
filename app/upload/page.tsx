@@ -76,7 +76,7 @@ const { toast } = useToast()
 return (
   <div className='w-full p-4 '>
     <div className="max-w-4xl mx-auto  h-full">
-      <form onSubmit={handleSubmit} >
+      <form method='post' onSubmit={handleSubmit} >
        
         
         
