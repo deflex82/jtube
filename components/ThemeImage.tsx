@@ -2,22 +2,25 @@
 
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from 'react';
 
-const ThemeImage = ()=>{
-    const {theme} = useTheme();
+const ThemeImage = () => {
+    const { theme, resolvedTheme } = useTheme();
+    const [currentTheme, setCurrentTheme] = useState(theme);
 
-    return(
+    useEffect(() => {
+        setCurrentTheme(resolvedTheme);
+    }, [resolvedTheme,theme]);
+
+    return (
         <div>
-            {theme=="dark" ?<>
-            <Image src={"/whitel.png"} alt="white logo" width={40} height={100} className="object-cover"/>
-            </>:<>
-            <Image src={"/blackl.png"} alt="dark logo" width={40} height={100} className="object-cover"/>
-
-            </>}
-
-
+            {currentTheme === "dark" ? (
+                <Image src="/whitel.png" alt="white logo" width={40} height={100} className="object-cover" />
+            ) : (
+                <Image src="/blackl.png" alt="dark logo" width={40} height={100} className="object-cover" />
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default ThemeImage;

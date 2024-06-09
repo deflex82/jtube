@@ -19,7 +19,7 @@ if (!cached) {
  const connectiontodb = async () => {
   
 const MONGODB_URL:any = process.env.MONGODB_URL;
-  console.log(MONGODB_URL);
+
   try{  if (cached.conn) return cached.conn;
 
     cached.promise =
@@ -31,7 +31,7 @@ const MONGODB_URL:any = process.env.MONGODB_URL;
       });
   
     cached.conn = await cached.promise;
-    console.log(cached.conn)
+    
   
     return cached.conn;
 

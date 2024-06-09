@@ -9,13 +9,26 @@ import { RadioTower } from 'lucide-react';
 import { ModeToggle } from './Toggle'
 import ThemeImage from './ThemeImage'
 import { Separator } from './ui/separator'
+
+import { SheetDemo } from './Mobilesheet'
+  
 const Header = async () => {
     const user = await currentUser()
 
     return (
-        <div className='px-5 sticky dark:border-[rgba(255,255,255,0.11)] top-0 shadow-sm  border-b border-[rgba(0,0,0,0.12)] dark:bg-[#090715] bg-zinc-50 p-3 z-10 flex items-center '>
+        <div className='lg:px-5 sticky dark:border-[rgba(255,255,255,0.11)] top-0 shadow-sm  border-b border-[rgba(0,0,0,0.12)] dark:bg-[#090715] bg-zinc-50 py-3 px-2 z-10 flex items-center '>
             <div className="lg:flex-[0.2] flex items-center gap-4 flex-1 justify-between lg:justify-normal">
-                <Menu />
+                <div className="flex items-center gap-4">
+                <SheetDemo/>
+                <div className="lg:hidden flex items-center justify-center">
+                    
+
+                {user && <UserButton afterSignOutUrl='/'/>}
+
+                </div>
+        
+                </div>
+             
 
 
                 <Link href={"/"}>
@@ -24,10 +37,7 @@ const Header = async () => {
                         <ThemeImage />
                         <div className="flex items-center gap-2">
                         <h1 className='font-mono font-semibold text-2xl text-pink-600'>Jtube</h1>
-                        <div className=" lg:hidden flex items-center justify-center">
-                        {user && <UserButton afterSignOutUrl='/'/>}
-
-                        </div>
+                       
 
 
 

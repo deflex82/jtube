@@ -24,6 +24,14 @@ const VideoSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true
+    },
+    views:{
+        type:Number,
+        default:0
+    },
+    duration:{
+        type:Number,
+        default:0
     }
 },{
     timestamps:true

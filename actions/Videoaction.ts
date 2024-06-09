@@ -21,8 +21,8 @@ export async function createVideo(formData:any){
 }
 const uploadaction=async(formdata:FormData)=>{
     "use server";
-    console.log(formdata);
-    const { userId } = auth();
+    try{
+        const { userId } = auth();
     
         const video = formdata.get("vid") as unknown as File;
         const image = formdata.get("img") as unknown as File;
@@ -36,7 +36,7 @@ const uploadaction=async(formdata:FormData)=>{
         const arraybuffer = await video.arrayBuffer();
         const buffer = Buffer.from(arraybuffer);
     
-        const response  = await imageKit.upload({
+        const videoresponse  = await imageKit.upload({
           file:buffer,
           fileName:video.name
         })
@@ -49,17 +49,27 @@ const uploadaction=async(formdata:FormData)=>{
             fileName:image.name
 
         })
+        console.log({videoresponse,thumbnailresponse})
 
         await connectiontodb();
         await Video.create({
             clerkId:userId,
-            VideoUrl:response.url,
+            VideoUrl:videoresponse.url,
             Thumbnail:thumbnailresponse.thumbnailUrl,
             title:title,
-            tags:tags
+            tags:tags,
+            duration:videoresponse.duration
 
 
         })
+
+    }catch(err){
+        console.log(err);
+    
+
+    }
+
+
     
 
         

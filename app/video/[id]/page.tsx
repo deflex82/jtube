@@ -2,25 +2,31 @@ import Comments from "@/components/Comments"
 import LikeUnlike from "@/components/LikeUnlike"
 import Video from "@/components/Video"
 import AddingComments from "@/components/ui/AddingComments"
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { getUser, getVideo } from "@/lib/datafetching"
+import { Suspense } from "react"
 import Image from "next/image"
 
-const VideoPage = () => {
+const VideoPage = async({params}:any) => {
+    const id = params.id;
+
+    const video:any = await getVideo(id);
+    const user:any = await getUser(video.clerkId);
+    console.log(user);
+   
     return (
         <div className="lg:max-w-7xl mx-auto flex w-full ">
             <div className=" flex-1 lg:flex-[0.7] flex flex-col p-2 lg:p-4">
 
-                <video className="w-full rounded-md" src="/lion.mp4" controls muted autoPlay />
+                <video className="w-full rounded-md" src={video?.VideoUrl} controls muted autoPlay />
                 <div className="flex flex-col gap-3 w-full">
-                    <h1 className="font-semibold p-1 text-2xl flex-wrap">Lion chilling with fellow human and roaring like king.</h1>
+                    <h1 className="font-semibold p-1 text-2xl flex-wrap">{video?.title}</h1>
                     <div className="flex gap-2 items-center  w-full justify-between md:justify-normal">
                         <div className="flex items-center gap-2 lg:gap-3 justify-between w-full">
                             <div className="flex items-center gap-2">
-                                <Image alt="channel logo" src={"/random.jpg"} height={50} width={50} className="object-cover rounded-[50%]" />
+                                <Image alt="channel logo" src={user?.ImageUrl} height={50} width={50} className="object-cover rounded-[50%]" />
                                 <div className="flex flex-col">
-                                    <h2 className="font-medium md:text-xl ">The Lion King</h2>
-                                    <p className="text-gray-500 text-sm">400 <span className="inline-block"> followers</span></p>
+                                    <h2 className="font-medium md:text-xl ">{user.fullname}</h2>
+                                    <p className="text-gray-500 text-sm">{user?.Followers?.length}<span className="inline-block"> followers</span></p>
 
 
                                 </div>
