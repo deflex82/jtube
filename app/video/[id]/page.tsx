@@ -26,7 +26,7 @@ const VideoPage = async({params}:any) => {
                                 <Image alt="channel logo" src={user?.ImageUrl} height={50} width={50} className="object-cover rounded-[50%]" />
                                 <div className="flex flex-col">
                                     <h2 className="font-medium md:text-xl ">{user.fullname}</h2>
-                                    <p className="text-gray-500 text-sm">{user?.Followers?.length}<span className="inline-block"> followers</span></p>
+                                    <p className="text-gray-500 text-sm">{user?.Followers?.length} <span className="inline-block"> followers</span></p>
 
 
                                 </div>
