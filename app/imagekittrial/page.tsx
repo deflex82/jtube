@@ -7,19 +7,27 @@ const page = () => {
 
     try{
         const trial = formdata.get("trial") as unknown as File;
+        const trial2 = formdata.get("trial2") as unknown as File;
       
      
 
         
     
         const arraybuffer = await trial.arrayBuffer();
+        
+        const arraybuffer2 = await trial2.arrayBuffer();
         const trialbuffer =  Buffer.from(arraybuffer);
+        const trialbuffer2 =  Buffer.from(arraybuffer2);
       
         const videoresponse:any  = await imageKit.upload({
           file:trialbuffer,
           fileName:trial.name
         })
-        console.log(videoresponse)
+        const videoresponse2:any  = await imageKit.upload({
+            file:trialbuffer2,
+            fileName:trial2.name
+          })
+        console.log({videoresponse,videoresponse2})
 
     }
     catch(err){
