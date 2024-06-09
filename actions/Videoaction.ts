@@ -36,7 +36,7 @@ const uploadaction=async(formdata:FormData)=>{
         const arraybuffer = await video.arrayBuffer();
         const buffer = Buffer.from(arraybuffer);
     
-        const videoresponse  = await imageKit.upload({
+        const videoresponse:any  = await imageKit.upload({
           file:buffer,
           fileName:video.name
         })
