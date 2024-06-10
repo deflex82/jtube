@@ -29,6 +29,7 @@ const uploadaction=async(formdata:FormData)=>{
         const image = formdata.get("img") ;
         const title = formdata.get("title");
         const tags = formdata.get("tags");
+        const duration = formdata.get("duration")
       
      
 
@@ -43,7 +44,7 @@ const uploadaction=async(formdata:FormData)=>{
             Thumbnail:image,
             title:title,
             tags:tags,
-            duration:video?.duration
+            duration:duration
 
 
         })

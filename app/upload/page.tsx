@@ -83,6 +83,7 @@ const handleSubmit = async (e: any) => {
     formData.append("img",imgresponse.secure_url);
     formData.append("title",title);
     formData.append("tags",tags);
+    formData.append("duration",vidresponse.duration)
 
 
 
