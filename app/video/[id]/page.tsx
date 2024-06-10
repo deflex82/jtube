@@ -1,13 +1,18 @@
 import Comments from "@/components/Comments"
-import LikeUnlike from "@/components/LikeUnlike"
+
 import Video from "@/components/Video"
+import Needtosignup from "@/components/needtosignup"
 import AddingComments from "@/components/ui/AddingComments"
 import { getUser, getVideo } from "@/lib/datafetching"
-import { Suspense } from "react"
+import processFullname from "@/lib/processfullname"
+import { currentUser } from "@clerk/nextjs/server"
+
 import Image from "next/image"
 
 const VideoPage = async({params}:any) => {
     const id = params.id;
+    const curruser = await currentUser();
+   
 
     const video:any = await getVideo(id);
     const user:any = await getUser(video.clerkId);
@@ -25,7 +30,7 @@ const VideoPage = async({params}:any) => {
                             <div className="flex items-center gap-2">
                                 <Image alt="channel logo" src={user?.ImageUrl} height={50} width={50} className="object-cover rounded-[50%]" />
                                 <div className="flex flex-col">
-                                    <h2 className="font-medium md:text-xl ">{user.fullname}</h2>
+                                    <h2 className="font-medium md:text-xl ">{processFullname(user?.fullname)}</h2>
                                     <p className="text-gray-500 text-sm">{user?.Followers?.length} <span className="inline-block"> followers</span></p>
 
 
@@ -34,7 +39,18 @@ const VideoPage = async({params}:any) => {
 
                             </div>
 
-                            <button className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">Follow</button>
+                         {
+                            curruser ?(  <button className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">Follow</button>):(
+                                <Needtosignup className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">
+                                    Follow
+
+                                </Needtosignup>
+                                
+
+                            )
+                         }
+
+                          
 
                         </div>
 
@@ -42,7 +58,6 @@ const VideoPage = async({params}:any) => {
 
 
 
-                        <LikeUnlike />
                     </div>
 
                     <h1 className="font-bold p-2">Comments</h1>

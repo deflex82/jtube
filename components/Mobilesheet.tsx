@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { LogIn, LogOut, Menu, Settings, Upload, User, Video } from "lucide-react"
+import { LogIn,  Menu, Settings, Upload, User, Video } from "lucide-react"
 import { ModeToggle } from "./Toggle"
 import Link from "next/link"
 import { currentUser } from "@clerk/nextjs/server"

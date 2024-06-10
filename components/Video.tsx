@@ -2,11 +2,16 @@
 import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
-import { format } from 'timeago.js';
-import extractDate, { timeAgo } from "./../lib/formatteddate"
+
+import { timeAgo } from "./../lib/formatteddate"
 import formatDuration from '@/lib/formatduration';
-const Video = ({details}:any) => {
-  
+import { getUser } from '@/lib/datafetching';
+import processFullname from '@/lib/processfullname';
+const Video = async({details}:any) => {
+   const user:any = await getUser(details?.clerkId)
+   
+
+
   return (
     <Link href={`/video/${details?._id}`}>
        <div className='w-full h-[300px]  p-2 flex flex-col'>
@@ -20,7 +25,12 @@ const Video = ({details}:any) => {
       </div>
       <div className="mt-2 flex-1">
         <h2 className='text-lg font-semibold'>{details?.title}</h2>
-        <p className='text-sm text-gray-600'> Sushant Rimal</p>
+        <p className='text-sm text-gray-600'>
+          {
+           processFullname(user?.fullname)
+            
+          }
+        </p>
         <div className="flex items-center  text-sm text-gray-600 w-full relative">
             {details?.views} views
             ---

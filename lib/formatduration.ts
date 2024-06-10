@@ -1,9 +1,10 @@
+export default function formatDuration(durationInSeconds: number) {
+    // Round the duration to the nearest whole number
+    const totalSeconds = Math.round(durationInSeconds);
 
-
-export default function formatDuration(durationInSeconds:number) {
-    const hours = Math.floor(durationInSeconds / 3600);
-    const minutes = Math.floor((durationInSeconds % 3600) / 60);
-    const seconds = durationInSeconds % 60;
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
     // Format minutes and seconds with leading zeros
     const formattedMinutes = minutes.toString().padStart(2, '0');
@@ -17,5 +18,3 @@ export default function formatDuration(durationInSeconds:number) {
         return `${formattedMinutes}:${formattedSeconds}`;
     }
 }
-
-

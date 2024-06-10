@@ -10,6 +10,7 @@ import { Button } from '@/components/FormButton';
 import { UploadCloudIcon, Video } from 'lucide-react';
 import Image from 'next/image';
 import { useToast } from '@/components/ui/use-toast';
+import { redirect } from 'next/navigation';
 
 
 
@@ -91,10 +92,12 @@ const handleSubmit = async (e: any) => {
 
     await uploadaction(formData); // Make sure uploadaction handles FormData
     setloading(false);
+
     toast({
       title:"Your video has been uploaded succesfully",
       description:"please visit your profile tag to see uploaded videos."
     })
+    redirect("/")
   } catch (error:any) {
     alert('Upload failed');
     setloading(false);
