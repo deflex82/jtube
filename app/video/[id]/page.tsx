@@ -11,7 +11,7 @@ const VideoPage = async({params}:any) => {
 
     const video:any = await getVideo(id);
     const user:any = await getUser(video.clerkId);
-    console.log(user);
+    
    
     return (
         <div className="lg:max-w-7xl mx-auto flex w-full ">

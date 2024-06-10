@@ -42,16 +42,52 @@ const Upload = () => {
 
 const handleSubmit = async (e: any) => {
   e.preventDefault();
-  const formData = new FormData();
-  formData.append('vid', video);
-  formData.append('tags', tags);
-  formData.append('title', title);
-  formData.append('img',img);
+
+
+  const imgformdata = new FormData();
+  imgformdata.append("upload_preset","qqjwyhbf")
+  imgformdata.append("file",img);
+
+  const vidformdata = new FormData();
+  vidformdata.append("upload_preset","qqjwyhbf");
+  vidformdata.append("file",video);
   
 
   try {
-    console.log(formData);
+   
     setloading(true);
+    const imageuploadurl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+    const videouploadurl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload`;
+
+    
+    const imageupload = await fetch(imageuploadurl, {
+  
+      method: 'POST',
+      body:imgformdata
+      
+    })
+
+    const videoupload  = await fetch(videouploadurl,{
+      method:"POST",
+      body:vidformdata
+    })
+    const imgresponse = await imageupload.json();
+    const vidresponse =await videoupload.json();
+    console.log({imgresponse,vidresponse})
+
+
+
+    const formData = new FormData();
+    formData.append("vid",vidresponse.secure_url);
+    formData.append("img",imgresponse.secure_url);
+    formData.append("title",title);
+    formData.append("tags",tags);
+
+
+
+
+
     await uploadaction(formData); // Make sure uploadaction handles FormData
     setloading(false);
     toast({
