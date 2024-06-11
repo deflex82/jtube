@@ -54,4 +54,23 @@ const getVideo = async (id: any) => {
 };
 
 
-export {getallVideos,getVideo};
+
+
+const recommendedvideos = async(id?:string)=>{
+    try{
+        await connectiontodb();
+        const video = await Video.find({
+            _id: { $ne: id }
+        })
+
+        return video || null;
+
+    }
+    catch(err){
+        console.error("Fialed to fetch and update videos",err);
+        return null;
+
+    }
+
+}
+export {getallVideos,getVideo,recommendedvideos};

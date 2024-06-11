@@ -1,16 +1,19 @@
 import Comments from "@/components/Comments"
+import RelatedVideos from "@/components/RelatedVideos"
 
-import Video from "@/components/Video"
+
 import Needtosignup from "@/components/needtosignup"
 import AddingComments from "@/components/ui/AddingComments"
 import { getUser, getVideo } from "@/lib/datafetching"
 import processFullname from "@/lib/processfullname"
 import { currentUser } from "@clerk/nextjs/server"
+import { Loader2Icon } from "lucide-react"
 
 import Image from "next/image"
+import { Suspense } from "react"
 
 const VideoPage = async({params}:any) => {
-    const id = params.id;
+    const id = await params.id;
     const curruser = await currentUser();
    
 
@@ -22,7 +25,12 @@ const VideoPage = async({params}:any) => {
         <div className="lg:max-w-7xl mx-auto flex w-full ">
             <div className=" flex-1 lg:flex-[0.7] flex flex-col p-2 lg:p-4">
 
+                <Suspense fallback={<p>Loading...</p>}>
                 <video className="w-full rounded-md" src={video?.VideoUrl} controls muted autoPlay />
+
+                </Suspense>
+
+            
                 <div className="flex flex-col gap-3 w-full">
                     <h1 className="font-semibold p-1 text-2xl flex-wrap">{video?.title}</h1>
                     <div className="flex gap-2 items-center  w-full justify-between md:justify-normal">
@@ -78,13 +86,9 @@ const VideoPage = async({params}:any) => {
             </div>
             <div className="flex-[0.3] p-4 hidden lg:block">
                 <h2 className="font-bold p-2">Related videos</h2>
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
+                <Suspense fallback = {<Loader2Icon/>}>
+                    <RelatedVideos id={id} />
+                </Suspense>
             </div>
         </div>
 
