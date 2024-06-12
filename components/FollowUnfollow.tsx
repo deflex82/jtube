@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react"
 
 const FollowUnfollow = ({target,isFollowing,userId}:{target:string,isFollowing:any,userId:string}) => {
-    const [Following,setFollowing] = useState(false);
+    const [Following,setFollowing] = useState<any>(null);
 
     useEffect(()=>{
       if(isFollowing){
@@ -18,8 +18,10 @@ const FollowUnfollow = ({target,isFollowing,userId}:{target:string,isFollowing:a
     const handlefollow = async(target:string,userId:string)=>{
       setFollowing(!Following)
       try{
-        await handlefollowunfollow(target,userId);
-
+        const response:any= await handlefollowunfollow(target,userId);
+        const status = response.isfollowing;
+        setFollowing(status);
+     
       }
       catch(err){
         console.log(err);

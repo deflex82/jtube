@@ -36,9 +36,9 @@ export async function handlefollowunfollow(targetId:string, userId:string) {
       throw new Error('User not found');
     }
 
-    const isFollowing = targetUser.Followers.includes(currentUser._id);
+    const isfollowing = targetUser.Followers.includes(currentUser._id);
 
-    if (isFollowing) {
+    if (isfollowing) {
       // If the current user is already following the target user, unfollow
       await User.updateOne(
         { _id: targetUser._id },
@@ -61,7 +61,7 @@ export async function handlefollowunfollow(targetId:string, userId:string) {
     }
     revalidatePath("/video/[id]","page")
 
-    return { isFollowing: !isFollowing }; // Return the new follow status
+    return { isfollowing: !isfollowing }; // Return the new follow status
   } catch (err) {
     console.error(err);
     throw new Error('Error handling follow/unfollow');
