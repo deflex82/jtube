@@ -1,6 +1,6 @@
 "use server"
 
-import imageKit from "@/lib/FileUpload";
+
 import connectiontodb from "@/lib/database";
 import Video from "@/models/Videos";
 import { auth } from "@clerk/nextjs/server";

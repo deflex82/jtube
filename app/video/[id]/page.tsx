@@ -1,4 +1,6 @@
+import { handlefollowunfollow } from "@/actions/useraction"
 import Comments from "@/components/Comments"
+import FollowUnfollow from "@/components/FollowUnfollow"
 import RelatedVideos from "@/components/RelatedVideos"
 
 
@@ -14,21 +16,32 @@ import { Suspense } from "react"
 
 const VideoPage = async({params}:any) => {
     const id = await params.id;
-    const curruser = await currentUser();
+    const curruser:any = await currentUser();
    
 
     const video:any = await getVideo(id);
     const user:any = await getUser(video.clerkId);
-    
+
+
+    const IsFollowing = ()=>{
+        
+        if(user.Followers.includes(curruser.id)){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+  
+ 
    
     return (
         <div className="lg:max-w-7xl mx-auto flex w-full ">
             <div className=" flex-1 lg:flex-[0.7] flex flex-col p-2 lg:p-4">
 
-                <Suspense fallback={<p>Loading...</p>}>
                 <video className="w-full rounded-md" src={video?.VideoUrl} controls muted autoPlay />
 
-                </Suspense>
+          
 
             
                 <div className="flex flex-col gap-3 w-full">
@@ -44,13 +57,13 @@ const VideoPage = async({params}:any) => {
 
                                 </div>
 
-
                             </div>
 
                          {
-                            curruser ?(  <button className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">Follow</button>):(
+                            curruser ?(  <FollowUnfollow userId={curruser.id} isFollowing={IsFollowing()} target={user.clerkId}/>):(
                                 <Needtosignup className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">
-                                    Follow
+                                    follow
+                                
 
                                 </Needtosignup>
                                 
