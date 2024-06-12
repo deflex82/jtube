@@ -24,6 +24,11 @@ export default async function CreateUser(user:any){
 
 export async function handlefollowunfollow(targetId:string, userId:string) {
   try {
+
+
+    if(targetId ==userId){
+      return "you cannot follow yourself";
+    }
     const targetUser = await User.findOne({ clerkId: targetId });
     const currentUser = await User.findOne({ clerkId: userId });
 
