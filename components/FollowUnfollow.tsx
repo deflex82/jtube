@@ -1,27 +1,44 @@
 "use client"
 
-import { handlefollowunfollow } from "@/actions/useraction";
-import { cn } from "@/lib/utils";
+import { FollowStatus, handlefollowunfollow } from "@/actions/useraction";
+
 import { useEffect, useState } from "react"
 
-const FollowUnfollow = ({target,isFollowing,userId}:{target:string,isFollowing:any,userId:string}) => {
+const FollowUnfollow = ({target,userId,setFollowers}:{target:string,userId:string,setFollowers:any}) => {
+  
     const [Following,setFollowing] = useState<any>(null);
 
+    const fetchfollowstatus = async()=>{
+      const formdata = new FormData();
+      formdata.append("target",target);
+      formdata.append("userId",userId);
+      const response  = await FollowStatus(formdata);
+      console.log(response);
+      setFollowing(response);
+      
+    }
+
     useEffect(()=>{
-      if(isFollowing){
-        setFollowing(true);
-      }else{
-        setFollowing(false)
-      }
-    },[isFollowing]);
+      fetchfollowstatus();
+    },[])
+
+
+
       
     const handlefollow = async(target:string,userId:string)=>{
-      setFollowing(!Following)
-      try{
-        const response:any= await handlefollowunfollow(target,userId);
-        const status = response.isfollowing;
-        setFollowing(status);
      
+      try{
+        if(Following){
+          setFollowing(!Following)
+          setFollowers((prev:any)=>prev -1)
+        }
+        else{
+          setFollowing(!Following);
+          setFollowers((prev:any)=>prev +1);
+        }
+        await handlefollowunfollow(target,userId);
+    
+       
       }
       catch(err){
         console.log(err);

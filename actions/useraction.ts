@@ -67,3 +67,29 @@ export async function handlefollowunfollow(targetId:string, userId:string) {
     throw new Error('Error handling follow/unfollow');
   }
 }
+
+export const FollowStatus = async(formdata:FormData)=>{
+  try{
+    const targetId = formdata.get("target");
+    const userId = formdata.get("userId")
+    const targetUser = await User.findOne({ clerkId: targetId });
+    const currentUser = await User.findOne({ clerkId: userId });
+
+    if (!targetUser || !currentUser) {
+      throw new Error('User not found');
+    }
+    
+    const isfollowing = targetUser.Followers.includes(currentUser._id);
+    if(isfollowing){
+      return true
+    }
+    else{
+      return false
+    }
+
+  }
+  catch(err){
+    console.log(err);
+  }
+
+}
