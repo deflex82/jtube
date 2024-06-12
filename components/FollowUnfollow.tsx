@@ -16,6 +16,7 @@ const FollowUnfollow = ({target,isFollowing,userId}:{target:string,isFollowing:a
     },[isFollowing]);
       
     const handlefollow = async(target:string,userId:string)=>{
+      setFollowing(!Following)
       try{
         await handlefollowunfollow(target,userId);
 
