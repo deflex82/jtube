@@ -1,6 +1,7 @@
 "use server";
 
 import connectiontodb from "@/lib/database";
+import Comment from "@/models/Comments";
 import User from "@/models/Users";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
@@ -68,6 +69,30 @@ export async function handlefollowunfollow(targetId:string, userId:string) {
   }
 }
 
+export const PostComment = async(formdata:FormData)=>{
+  try{
+    const commentText = formdata.get("commenttext");
+    const userId = formdata.get("userId");
+    const videoId = formdata.get("videoId");
+
+
+    const newcomment = await Comment.create({
+      commentText:commentText,
+      clerkId:userId,
+      videoId:videoId
+    })
+    revalidatePath("/video/[id]","page");
+
+    return JSON.parse(JSON.stringify(newcomment));
+
+  
+  }
+  catch(err){
+    console.log(err);
+  }
+
+}
+
 export const FollowStatus = async(formdata:FormData)=>{
   try{
     const targetId = formdata.get("target");
@@ -81,10 +106,14 @@ export const FollowStatus = async(formdata:FormData)=>{
     
     const isfollowing = targetUser.Followers.includes(currentUser._id);
     if(isfollowing){
-      return true
+      
+      return true;
+    
     }
     else{
-      return false
+   
+      return false;
+     
     }
 
   }

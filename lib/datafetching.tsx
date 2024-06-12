@@ -1,6 +1,7 @@
 import Video from "@/models/Videos";
 import connectiontodb from "./database"
 import User from "@/models/Users";
+import Comment from "@/models/Comments";
 
 
 const getallVideos = async()=>{
@@ -15,6 +16,19 @@ const getallVideos = async()=>{
     catch(err){
         console.log(err);
 
+    }
+
+}
+
+export const getComments = async(videoId:string)=>{
+    try{
+        await connectiontodb();
+        const comments = await Comment.find({videoId:videoId})
+        return comments;
+
+    }
+    catch(err){
+        console.log(err);
     }
 
 }

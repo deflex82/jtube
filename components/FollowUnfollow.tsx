@@ -1,55 +1,54 @@
+
 "use client"
 
 import { FollowStatus, handlefollowunfollow } from "@/actions/useraction";
+import { useCallback, useEffect, useState } from "react";
 
-import { useEffect, useState } from "react"
+const FollowUnfollow = ({curruser=null,target}:any) => {
+  const [following,setfollowing] = useState<any>(null);
+ 
 
-const FollowUnfollow = ({target,userId,setFollowers}:{target:string,userId:string,setFollowers:any}) => {
-  
-    const [Following,setFollowing] = useState<any>(null);
-
-    const fetchfollowstatus = async()=>{
-      const formdata = new FormData();
-      formdata.append("target",target);
-      formdata.append("userId",userId);
-      const response  = await FollowStatus(formdata);
-      console.log(response);
-      setFollowing(response);
-      
+  const handlefollowstatus=useCallback(async()=>{
+    try{
+      const newform = new FormData();
+      newform.append("userId",curruser.id);
+      newform.append("target",target);
+      const response:any = await FollowStatus(newform);
+      setfollowing(response);
     }
-
-    useEffect(()=>{
-      fetchfollowstatus();
-    },[])
-
-
-
-      
-    const handlefollow = async(target:string,userId:string)=>{
-     
-      try{
-        if(Following){
-          setFollowing(!Following)
-          setFollowers((prev:any)=>prev -1)
-        }
-        else{
-          setFollowing(!Following);
-          setFollowers((prev:any)=>prev +1);
-        }
-        await handlefollowunfollow(target,userId);
+    catch(err){
+      setfollowing(false);
+    }
+   
+  },[curruser.id,target])
+  useEffect(()=>{
+     handlefollowstatus()
     
-       
-      }
-      catch(err){
-        console.log(err);
-      }
-    }
 
+  })
+
+  const togglefollowing = async()=>{
+    try{
+      if(following){
+        setfollowing(false);
+        await handlefollowunfollow(target,curruser.id);
+
+      }else{
+        setfollowing(true);
+        await handlefollowunfollow(target,curruser.id);
+      }
+  
+
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
 
 
   return (
-    <button onClick={()=>{handlefollow(target,userId)}}   className="bg-pink-600 text-slate-100 px-3 py-1 text-sm hover:opacity-85 transition rounded-md">
-      {Following?"following":"follow"}
+    <button onClick={togglefollowing}    className="bg-pink-600  text-slate-100 px-5 py-2 text-sm md:text-[1rem] hover:opacity-85 transition rounded-md">
+      {following?"following":"follow"}
     </button>)
  
   
