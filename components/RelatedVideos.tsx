@@ -4,7 +4,7 @@ import Video from "@/components/Video"
 
 const RelatedVideos = async({id}:{id:any}) => {
     const videos = await recommendedvideos(id);
-    console.log(videos);
+
 
   return (
     <>

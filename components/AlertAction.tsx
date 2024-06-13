@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from "next/navigation";
+
 import { AlertDialogAction } from "./ui/alert-dialog";
 
 const AlertAction = () => {

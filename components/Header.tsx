@@ -1,7 +1,7 @@
 
 import { UserButton, } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
-import { Menu, Search, Upload } from 'lucide-react'
+import {  Search, Upload } from 'lucide-react'
 
 import Link from 'next/link'
 import React from 'react'

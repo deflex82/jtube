@@ -3,7 +3,7 @@
 import connectiontodb from "@/lib/database";
 import Comment from "@/models/Comments";
 import User from "@/models/Users";
-import { auth } from "@clerk/nextjs/server";
+
 import { revalidatePath } from "next/cache";
 
 export default async function CreateUser(user:any){

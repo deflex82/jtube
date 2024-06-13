@@ -58,8 +58,8 @@ const handleSubmit = async (e: any) => {
    
     setloading(true);
     const imageuploadurl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
-
-    const videouploadurl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload`;
+ const videouploadurl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload`;
+   
 
     
     const imageupload = await fetch(imageuploadurl, {
@@ -95,9 +95,9 @@ const handleSubmit = async (e: any) => {
 
     toast({
       title:"Your video has been uploaded succesfully",
-      description:"please visit your profile tag to see uploaded videos."
+      description:<p className='text-red-600 font-medium'>You will be redirected to home page shortly</p>
     })
-    redirect("/")
+    
   } catch (error:any) {
     alert('Upload failed');
     setloading(false);
