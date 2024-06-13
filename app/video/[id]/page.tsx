@@ -32,7 +32,7 @@ const VideoPage = async ({ params }: any) => {
     const curruser = JSON.parse(JSON.stringify(curruserdata));
 
     const videodata = await getVideo(id);
-    const userdata = await getUser(videodata.clerkId);
+    const userdata = await getUser(videodata?.clerkId);
 
     const user = JSON.parse(JSON.stringify(userdata));
     const video = JSON.parse(JSON.stringify(videodata));
@@ -100,7 +100,7 @@ const VideoPage = async ({ params }: any) => {
 
                                 : (<>{
                                     curruser ? (
-                                        <FollowUnfollow target={user.clerkId} curruser={curruser} />
+                                        <FollowUnfollow target={user?.clerkId} curruser={curruser} />
                                     ) : (
                                         <Needtosignup className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">
                                             Follow
