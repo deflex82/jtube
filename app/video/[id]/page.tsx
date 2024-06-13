@@ -113,7 +113,7 @@ const VideoPage = async ({ params }: any) => {
 
                     <h1 className="font-bold p-2">Comments</h1>
 
-                    <AddingComments userImage={curruser?.imageUrl} userId={curruser?.id} videoId={id} />
+                    <AddingComments curruser={curruser} userImage={curruser?.imageUrl} userId={curruser?.id} videoId={id} />
 
 
                     {Commentdetails?.map((comment: any) => {

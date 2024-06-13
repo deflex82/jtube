@@ -9,7 +9,7 @@ const Comments = async({comment}:any) => {
   const user = await getUser(comment.clerkId);
   return (
     <div className='flex items-center gap-2 w-full my-3'>
-        <Image src={user.ImageUrl} alt='comment-profile' height={50} width={50} className='rounded-[50%]'/>
+        <Image src={user?.ImageUrl} alt='comment-profile' height={50} width={50} className='rounded-[50%]'/>
 
         <div className="flex flex-col gap-2">
             <div className="flex items-center">
