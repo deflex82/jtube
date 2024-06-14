@@ -12,7 +12,7 @@ import DeletingVideo from "@/components/DeletingVideo";
 import Needtosignup from "@/components/needtosignup";
 import processFullname from "@/lib/processfullname";
 import Image from "next/image";
-import { FollowStatus, handlefollowunfollow } from "@/actions/useraction";
+import {  handlefollowunfollow } from "@/actions/useraction";
 import { EllipsisVertical, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
@@ -36,16 +36,23 @@ const VideoDetails = ({ user, curruser, videoid,isFollowing }: any) => {
 
   const isOwnerOfVideo = () => curruser && curruser.id === user.clerkId;
 
-  const toggleFollowing = async () => {
+  const toggleFollowing = async (e:any) => {
+    e.preventDefault();
     try {
       if (following) {
         setFollowing(false);
         setFollowers(followers -1);
-        await handlefollowunfollow(user.clerkId, curruser.id);
+        const formdata  = new FormData();
+        formdata.append("targetId",user.clerkId);
+        formdata.append("userId",curruser.id);
+        await handlefollowunfollow(formdata);
       } else {
         setFollowing(true);
         setFollowers(followers +1);
-        await handlefollowunfollow(user.clerkId, curruser.id);
+        const formdata  = new FormData();
+        formdata.append("targetId",user.clerkId);
+        formdata.append("userId",curruser.id);
+        await handlefollowunfollow(formdata);
       }
     } catch (err) {
       console.log(err);
@@ -89,13 +96,18 @@ const VideoDetails = ({ user, curruser, videoid,isFollowing }: any) => {
         ) : (
           <>
             {curruser ? (
-              <button onClick={toggleFollowing} className="bg-pink-600 text-slate-100 px-5 py-2 text-sm md:text-[1rem] hover:opacity-85 transition rounded-md">
+                <form onSubmit={toggleFollowing}>
+
+               
+              <button  className="bg-pink-600 text-slate-100 px-5 py-2 text-sm md:text-[1rem] hover:opacity-85 transition rounded-md">
                 {following ? "following" : "follow"}
               </button>
+              </form>
             ) : (
+            
               <Needtosignup className="md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90">
-                Follow
-              </Needtosignup>
+               Follow
+             </Needtosignup>
             )}
           </>
         )}
