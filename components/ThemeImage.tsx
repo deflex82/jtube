@@ -9,13 +9,13 @@ const ThemeImage = () => {
  
 
     
-
+     
     return (
         <div>
             {theme === "dark" ? (
-                <Image src="/whitel.png" alt="white logo" width={40} height={100} className="object-cover" />
+                <Image priority src="/whitel.png" alt="white logo" width={40} height={100} className="object-cover" />
             ) : (
-                <Image src="/blackl.png" alt="dark logo" width={40} height={100} className="object-cover" />
+                <Image priority src="/blackl.png" alt="dark logo" width={40} height={100} className="object-cover" />
             )}
         </div>
     );
