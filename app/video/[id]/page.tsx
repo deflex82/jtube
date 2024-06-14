@@ -1,4 +1,3 @@
-import Comments from "@/components/Comments";
 
 import RelatedVideos from "@/components/RelatedVideos";
 
@@ -9,16 +8,28 @@ import { getComments, getUser, getVideo } from "@/lib/datafetching";
 
 
 import { currentUser } from "@clerk/nextjs/server";
-import {    Loader2Icon,  } from "lucide-react";
 
 
 import { Suspense } from "react";
-import VideoDetails from "@/components/ui/VideoDetails";
-import { FollowStatus } from "@/actions/useraction";
 
+import { FollowStatus } from "@/actions/useraction";
+import { SkeletonCard } from "@/components/SkeletonCard";
+
+import dynamic from "next/dynamic";
+import { SkeletonDetails } from "@/components/DetailsSkeleton";
+
+const VideoDetails = dynamic(() => import('@/components/ui/VideoDetails'), {
+    ssr: false,
+    loading: () => <SkeletonDetails />, // Use the skeleton component while loading
+});
+const Comments = dynamic(()=> import('@/components/Comments'),{
+    ssr:false,
+    loading:()=><SkeletonDetails/>
+
+})
 
 const VideoPage = async ({ params }: any) => {
-    
+
     const id = params.id;
     const curruserdata = await currentUser();
     const Commentdetails: any = await getComments(id)
@@ -30,39 +41,47 @@ const VideoPage = async ({ params }: any) => {
 
     const user = JSON.parse(JSON.stringify(userdata));
     const video = JSON.parse(JSON.stringify(videodata));
-      const isFollowing = await FollowStatus(curruser.id,user.clerkId)
 
-    
-  
+    const isFollowing = await FollowStatus(curruser?.id, user?.clerkId)
+
 
     return (
         <div className="lg:max-w-7xl mx-auto flex w-full">
             <div className="flex-1 lg:flex-[0.7] flex flex-col p-2 lg:p-4">
-                <video className="w-full rounded-md" src={video?.VideoUrl} controls muted autoPlay />
+              <video autoPlay controls muted src={video?.VideoUrl}/>
 
                 <div className="flex flex-col gap-3 w-full">
                     <h1 className="font-semibold p-1 text-2xl flex-wrap">{video?.title}</h1>
-                    <VideoDetails isFollowing={isFollowing} user={user} curruser={curruser} videoid={id}/>
-                 
+                
+                        <VideoDetails isFollowing={isFollowing} user={user} curruser={curruser} videoid={id} />
+
+                    
+
+
 
                     <h1 className="font-bold p-2">Comments</h1>
 
                     <AddingComments curruser={curruser} userImage={curruser?.imageUrl} userId={curruser?.id} videoId={id} />
 
+                    <Suspense fallback={<SkeletonDetails/>}>
+                        {Commentdetails?.reverse().map((comment: any) => {
 
-                    {Commentdetails?.reverse().map((comment: any) => {
+                            return (
+                                <Comments key={comment._id} comment={comment} />
+                            )
+                        })
 
-                        return (
-                            <Comments key={comment._id} comment={comment} />
-                        )
-                    })
+                        }
 
-                    }
+                    </Suspense>
+
+
+
                 </div>
             </div>
             <div className="flex-[0.3] p-4 hidden lg:block">
                 <h2 className="font-bold p-2">Related videos</h2>
-                <Suspense fallback={<Loader2Icon />}>
+                <Suspense fallback={<SkeletonCard />}>
                     <RelatedVideos id={id} />
                 </Suspense>
             </div>

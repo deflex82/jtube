@@ -1,3 +1,4 @@
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,7 +14,7 @@ import Link from "next/link"
 import { ReactNode } from "react"
   
 
-const Needtosignup = async({children,className}:{children:ReactNode,className:string}) => {
+const Needtosignup = ({children,className}:{children:ReactNode,className:string}) => {
   return (
     <AlertDialog>
     <AlertDialogTrigger className={className}>{children}</AlertDialogTrigger>

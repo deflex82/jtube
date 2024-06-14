@@ -23,7 +23,7 @@ export default function RootLayout({
     <ClerkProvider  >
 
     <html lang="en">
-      <body className={cn(inter.className)}>
+      <body className={cn(inter.className,'')}>
       <ThemeProvider
             attribute="class"
             defaultTheme="light"

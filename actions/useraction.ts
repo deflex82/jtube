@@ -23,8 +23,11 @@ export default async function CreateUser(user:any){
 
 // Make sure to adjust the import according to your project structure
 
-export async function handlefollowunfollow(targetId:string, userId:string) {
+export async function handlefollowunfollow(formdata:FormData) {
+  "use server"
   try {
+    const targetId = formdata.get("targetId");
+    const userId = formdata.get("userId")
 
 
     if(targetId ==userId){
@@ -70,6 +73,7 @@ export async function handlefollowunfollow(targetId:string, userId:string) {
 }
 
 export const PostComment = async(formdata:FormData)=>{
+  "use server "
   try{
     const commentText = formdata.get("commenttext");
     const userId = formdata.get("userId");
