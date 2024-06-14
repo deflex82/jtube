@@ -93,10 +93,9 @@ export const PostComment = async(formdata:FormData)=>{
 
 }
 
-export const FollowStatus = async(formdata:FormData)=>{
+export const FollowStatus = async(userId:string,targetId:string)=>{
   try{
-    const targetId = formdata.get("target");
-    const userId = formdata.get("userId")
+   
     const targetUser = await User.findOne({ clerkId: targetId });
     const currentUser = await User.findOne({ clerkId: userId });
 

@@ -3,10 +3,10 @@
 import { PostComment } from '@/actions/useraction';
 
 import { cn } from '@/lib/utils';
-import { LoaderPinwheel } from 'lucide-react';
+import { LoaderIcon } from 'lucide-react';
 import Image from 'next/image'
 import React, {  useState } from 'react'
-import { text } from 'stream/consumers';
+
 import Needtosignup from './needtosignup';
 
 const AddingComments = ({userId,videoId,userImage,curruser}:{userId:string,videoId:string,userImage:string,curruser:any}) => {
@@ -46,7 +46,7 @@ const AddingComments = ({userId,videoId,userImage,curruser}:{userId:string,video
               {
                 curruser ?(
               
-                       <button className={cn(`px-5 py-1 text-slate-100 rounded-md  transition bg-pink-600 hover:bg-pink-600/85  `,`${Text?"block":"hidden"}`)}>{Loading ? <LoaderPinwheel/>:"Post"}</button>)
+                       <button className={cn(`px-5 py-1 text-slate-100 rounded-md  transition bg-pink-600 hover:bg-pink-600/85  `,`${Text?"block":"hidden"}`)}>{Loading ? <LoaderIcon/>:"Post"}</button>)
                        :(
                         <Needtosignup className='md:px-5 md:py-1 px-2 py-1 text-sm rounded-md font-normal bg-slate-800 dark:bg-slate-100 text-slate-200 dark:text-black dark:hover:bg-slate-100/90 hover:bg-slate-800/90'>
                           Post
