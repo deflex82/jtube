@@ -81,9 +81,9 @@ const VideoPage = async ({ params }: any) => {
             </div>
             <div className="flex-[0.3] p-4 hidden lg:block">
                 <h2 className="font-bold p-2">Related videos</h2>
-                <Suspense fallback={<SkeletonCard />}>
+              
                     <RelatedVideos id={id} />
-                </Suspense>
+              
             </div>
         </div>
     );

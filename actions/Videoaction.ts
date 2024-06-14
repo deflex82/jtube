@@ -8,6 +8,7 @@ import extractPublicIdFromUrl from "@/lib/Urlextraction";
 import Video from "@/models/Videos";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
@@ -99,7 +100,7 @@ const uploadaction=async(formdata:FormData)=>{
     
 
     }
-
+revalidatePath("/","page");
     redirect("/");
 
 

@@ -1,6 +1,8 @@
 import { recommendedvideos } from '@/lib/datafetching'
-import React from 'react'
+import React, { Suspense } from 'react'
 import Video from "@/components/Video"
+
+import { SkeletonCard } from './SkeletonCard';
 
 const RelatedVideos = async({id}:{id:any}) => {
     const videos = await recommendedvideos(id);
@@ -8,8 +10,8 @@ const RelatedVideos = async({id}:{id:any}) => {
 
   return (
     <>
-      
-      {
+    <Suspense fallback={<SkeletonCard/>}>
+    {
         videos?.map(video=>
           
           (
@@ -18,6 +20,10 @@ const RelatedVideos = async({id}:{id:any}) => {
         )
   
       }
+      
+    </Suspense>
+      
+
     </>
 
 
