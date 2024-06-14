@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
         default:[]
 
     },
+    noofvideos:{
+        type:Number,
+        default:0
+    },
     liked: {
         type: Array,
         default: []

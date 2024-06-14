@@ -18,8 +18,10 @@ import ThemeImage from "./ThemeImage"
 
 
 export async function SheetDemo() {
+  const userdata = await currentUser()
+  const user = JSON.parse(JSON.stringify(userdata));
  
-  const user = await currentUser()
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -69,8 +71,9 @@ export async function SheetDemo() {
 
               }
 
-
+              <Link href={`/profile/${user?.id}`}>
               {user && (<li className="flex items-center gap-4 transition hover:opacity-85 p-2 font-semibold"><User /> Profile </li>)}
+              </Link>
 
               <li className="flex items-center gap-4 transition hover:opacity-85 p-2 font-semibold"><Settings /> Settings</li>
               {user &&
