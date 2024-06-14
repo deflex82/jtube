@@ -5,16 +5,14 @@ import Image from "next/image";
 import { useEffect, useState } from 'react';
 
 const ThemeImage = () => {
-    const { theme, resolvedTheme } = useTheme();
-    const [currentTheme, setCurrentTheme] = useState(theme);
+    const { theme} = useTheme();
+ 
 
-    useEffect(() => {
-        setCurrentTheme(resolvedTheme);
-    }, [resolvedTheme,theme]);
+    
 
     return (
         <div>
-            {currentTheme === "dark" ? (
+            {theme === "dark" ? (
                 <Image src="/whitel.png" alt="white logo" width={40} height={100} className="object-cover" />
             ) : (
                 <Image src="/blackl.png" alt="dark logo" width={40} height={100} className="object-cover" />
