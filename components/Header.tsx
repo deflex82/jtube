@@ -7,11 +7,17 @@ import Link from 'next/link'
 import React from 'react'
 import { RadioTower } from 'lucide-react';
 import { ModeToggle } from './Toggle'
-import ThemeImage from './ThemeImage'
+
 import { Separator } from './ui/separator'
 
 import { SheetDemo } from './Mobilesheet'
+import dynamic from 'next/dynamic'
+import { SkeletonCircle } from './SkeletonCircle'
+const ThemeImage = dynamic(()=> import('./ThemeImage'),{
+    ssr:false,
+    loading:()=><SkeletonCircle/>
   
+  })
 const Header = async () => {
     const user = await currentUser()
 
