@@ -11,6 +11,7 @@ import { UploadCloudIcon, Video } from 'lucide-react';
 import Image from 'next/image';
 import { useToast } from '@/components/ui/use-toast';
 import { redirect } from 'next/navigation';
+import Header from '@/components/Header';
 
 
 
@@ -114,6 +115,9 @@ const handleSubmit = async (e: any) => {
 const { toast } = useToast()
 
 return (
+  <>
+  <Header/>
+
   <div className='w-full p-4 '>
     <div className="max-w-4xl mx-auto  h-full">
       <form method='post' onSubmit={handleSubmit} >
@@ -232,6 +236,7 @@ return (
     </div>
 
   </div>
+  </>
 )
 }
 

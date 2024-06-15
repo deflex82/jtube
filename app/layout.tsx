@@ -29,7 +29,7 @@ export default function RootLayout({
             defaultTheme="light"
       
           >
-        <Header/>
+     
   
         {children}
         <Toaster />

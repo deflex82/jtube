@@ -15,6 +15,7 @@ import Image from "next/image";
 import {  handlefollowunfollow } from "@/actions/useraction";
 import { EllipsisVertical, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 
 const VideoDetails = ({ user, curruser, videoid,isFollowing }: any) => {
   const [followers, setFollowers] = useState<any>(null);
@@ -63,6 +64,7 @@ const VideoDetails = ({ user, curruser, videoid,isFollowing }: any) => {
     <div className="flex gap-2 items-center w-full justify-between md:justify-normal">
       <div className="flex items-center gap-2 lg:gap-3 justify-between w-full">
         <div className="flex items-center gap-2">
+          <Link href={`/profile/${user.clerkId}`}>
           <Image
             alt="channel logo"
             src={user?.ImageUrl}
@@ -70,7 +72,11 @@ const VideoDetails = ({ user, curruser, videoid,isFollowing }: any) => {
             width={50}
             className="object-cover rounded-full"
           />
+
+          </Link>
+       
           <div className="flex flex-col">
+            
             <h2 className="font-medium md:text-xl">{processFullname(user?.fullname)}</h2>
             <p className="text-gray-500 text-sm">
               {followers} <span className="inline-block">followers</span>

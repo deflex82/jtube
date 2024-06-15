@@ -9,6 +9,7 @@ import Video from "@/models/Videos";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import User from "@/models/Users";
 cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
@@ -39,6 +40,11 @@ export async function deleteVideo(formdata: FormData) {
         if (cloudinaryResponsedeletion.result === 'ok' && cloudinarythumbnaildeletion.result==="ok") {
           // Delete video from your database
           await Video.deleteOne({ _id: videoId });
+          const updatedUser = await User.findOneAndUpdate(
+            { clerkId: userId },
+            { $inc: { videoCount: -1 } }, // Decrement videoCount by 1
+            { new: true } // Return the updated user document
+        );
         } else {
           console.log('Failed to delete video from Cloudinary');
         }
@@ -52,19 +58,7 @@ export async function deleteVideo(formdata: FormData) {
     redirect("/");
   }
 
-export async function createVideo(formData:any){
-    console.log("request has arrived");
 
-    try{
-        console.log(formData);
-
-    }
-    catch(err){
-        console.log(err)
-    }
-
-
-}
 const uploadaction=async(formdata:FormData)=>{
     "use server";
     console.log(formdata);
@@ -84,6 +78,7 @@ const uploadaction=async(formdata:FormData)=>{
       
 
         await connectiontodb();
+       
         await Video.create({
             clerkId:userId,
             VideoUrl:video,
@@ -93,7 +88,13 @@ const uploadaction=async(formdata:FormData)=>{
             duration:duration
 
 
-        })
+        });
+        const user = await User.findOneAndUpdate(
+          { clerkId: userId },
+          { $inc: { noofvideos: 1 } }, // Increment videoCount by 1
+          { new: true } // Return the updated user document
+      );
+        
 
     }catch(err){
         console.log(err);

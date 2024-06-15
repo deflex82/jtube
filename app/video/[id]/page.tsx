@@ -17,6 +17,7 @@ import { SkeletonCard } from "@/components/SkeletonCard";
 
 import dynamic from "next/dynamic";
 import { SkeletonDetails } from "@/components/DetailsSkeleton";
+import Header from "@/components/Header";
 
 const VideoDetails = dynamic(() => import('@/components/ui/VideoDetails'), {
     ssr: false,
@@ -46,6 +47,9 @@ const VideoPage = async ({ params }: any) => {
 
 
     return (
+        <>
+        <Header/>
+  
         <div className="lg:max-w-7xl mx-auto flex w-full">
             <div className="flex-1 lg:flex-[0.7] flex flex-col p-2 lg:p-4">
               <video autoPlay controls muted src={video?.VideoUrl}/>
@@ -86,6 +90,7 @@ const VideoPage = async ({ params }: any) => {
               
             </div>
         </div>
+        </>
     );
 };
 

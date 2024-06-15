@@ -38,7 +38,7 @@ const Profile = async ({ params }: any) => {
         
     }
     const Videos = await getUserVideos(user.clerkId);
-    console.log(Videos);
+    
 
     return (
         <div className="lg:max-w-3xl mx-auto flex w-full border-r border-l border-[rgba(0,0,0,0.19)] dark:border-[rgba(255,255,255,0.123)] p-4 h-screen">
@@ -100,6 +100,7 @@ const Profile = async ({ params }: any) => {
                     </div>
 
                     <h1 className="text-xl font-semibold"> videos</h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-y-2 w-full">
 
                     <Suspense fallback = {<SkeletonCard />}>
         {
@@ -111,6 +112,9 @@ const Profile = async ({ params }: any) => {
           })
     
         }
+          </Suspense>
+
+        </div>
         {
             Videos?.length==0 && (<div className="w-full flex items-center justify-center flex-col">
                 <CloudUpload className="text-pink-600" size={100}/>
@@ -121,8 +125,7 @@ const Profile = async ({ params }: any) => {
         }
 
 
-        </Suspense>
-
+      
 
 
                     
