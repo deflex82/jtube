@@ -50,7 +50,7 @@ const Profile = async ({ params }: any) => {
                    
                     <div className="flex  flex-col ">
                         <h2 className="font-bold">{processFullname(user?.fullname)}</h2>
-                        <p className="text-gray-400">{"5"} videos</p>
+                        <p className="text-gray-400">{user.noofvideos} videos</p>
                     </div>
 
                 </div>
