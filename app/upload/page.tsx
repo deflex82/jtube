@@ -116,7 +116,7 @@ const { toast } = useToast()
 
 return (
   <>
-  <Header/>
+
 
   <div className='w-full p-4 '>
     <div className="max-w-4xl mx-auto  h-full">
