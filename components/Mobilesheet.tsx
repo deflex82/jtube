@@ -70,11 +70,11 @@ export async function SheetDemo() {
                 )
 
               }
-
+         <SheetTrigger asChild>
               <Link href={`/profile/${user?.id}`}>
               {user && (<li className="flex items-center gap-4 transition hover:opacity-85 p-2 font-semibold"><User /> Profile </li>)}
               </Link>
-
+              </SheetTrigger>
               <li className="flex items-center gap-4 transition hover:opacity-85 p-2 font-semibold"><Settings /> Settings</li>
               {user &&
                 <SheetTrigger asChild>

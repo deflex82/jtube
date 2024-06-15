@@ -33,6 +33,18 @@ export const getComments = async(videoId:string)=>{
 
 }
 
+export const getUserVideos = async(userId:string)=>{
+    try{
+        await connectiontodb();
+        const Videos= await Video.find({clerkId:userId});
+        return Videos;
+
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
 export const getUser = async(clerkId:string)=>{
     try{
         await connectiontodb();
