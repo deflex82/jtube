@@ -14,9 +14,14 @@ import { LogIn,  Menu, Settings, Upload, User, Video } from "lucide-react"
 import { ModeToggle } from "./Toggle"
 import Link from "next/link"
 import { currentUser } from "@clerk/nextjs/server"
-import ThemeImage from "./ThemeImage"
 
+import dynamic from "next/dynamic"
+import { SkeletonCircle } from "./SkeletonCircle"
+const ThemeImage = dynamic(()=> import('./ThemeImage'),{
+  ssr:false,
+  loading:()=><SkeletonCircle/>
 
+})
 export async function SheetDemo() {
   const userdata = await currentUser()
   const user = JSON.parse(JSON.stringify(userdata));
@@ -34,6 +39,7 @@ export async function SheetDemo() {
               <div className="flex items-center gap-1 mb-8 ">
 
                 <div className="flex items-center gap-2">
+
                   <ThemeImage />
                   <h1 className='font-mono font-semibold text-2xl text-pink-600'>Jtube</h1>
 

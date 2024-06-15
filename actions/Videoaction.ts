@@ -10,6 +10,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import User from "@/models/Users";
+import Comment from "@/models/Comments";
 cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
@@ -40,11 +41,12 @@ export async function deleteVideo(formdata: FormData) {
         if (cloudinaryResponsedeletion.result === 'ok' && cloudinarythumbnaildeletion.result==="ok") {
           // Delete video from your database
           await Video.deleteOne({ _id: videoId });
-          const updatedUser = await User.findOneAndUpdate(
+          await User.findOneAndUpdate(
             { clerkId: userId },
             { $inc: { videoCount: -1 } }, // Decrement videoCount by 1
             { new: true } // Return the updated user document
         );
+        await Comment.deleteMany({videoId:videoId});
         } else {
           console.log('Failed to delete video from Cloudinary');
         }
