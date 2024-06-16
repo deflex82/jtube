@@ -11,7 +11,7 @@ export function SkeletonDetails() {
       </div>
 
       </div>
-      <div className="flex gap-2">
+      <div className=" gap-2 hidden md:flex">
         
       <div className="h-4 w-[100px]  bg-[rgba(90,67,67,0.6)]  dark:bg-muted rounded-md p-3"></div>
       <div className="h-4 w-[100px]  bg-[rgba(90,67,67,0.6)]  dark:bg-muted rounded-md p-3"></div>

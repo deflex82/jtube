@@ -137,6 +137,74 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
     }
   }
   return (
+    <>
+    <div className=" md:hidden flex items-center rounded-[30px]  ">
+      {
+        curruser ? (   <div className=" items-center rounded-[30px] dark:bg-gray-900 border cursor-pointer flex border-[rgba(23,23,22,0.71)] dark:border-[rgba(255,255,255,0.234)]">
+            
+        <div   onClick={togglelike} className="flex rounded-l-[30px] fade-in-5   items-center gap-2 p-3 
+        hover:bg-gray-200 dark:hover:bg-gray-800 transition  px-4 ">
+          <ThumbsUp  className=" bg-transparent"
+            fill={relation === "liked" ?"#db2777":"none" }
+            
+            
+            
+            
+          />
+          <p className="font-medium tracking-tight text-sm">{videolikes}</p>
+
+        </div>
+        <div className="border    h-8 border-gray-700 dark:border-slate-500  " ></div>
+        <div  onClick={toggledislike} className="flex rounded-r-[30px] fade-in-5 hover:bg-gray-200/85   items-center gap-2 p-3 dark:hover:bg-gray-800 transition  px-4 ">
+          <ThumbsDown className="!border-0 !outline-0"
+             fill={relation === "disliked" ? "#db2777" : "none"}
+             
+         
+          />
+
+
+        </div>
+
+      </div>):(
+         <Needtosignup className="rounded-[30px]">
+
+           
+         <div className=" items-center rounded-[30px] dark:bg-gray-900 border cursor-pointer flex  dark:border-slate-500 border-gray-700">
+        
+         <div    className="flex rounded-l-[30px] fade-in-5   items-center gap-2 p-3 
+         hover:bg-gray-200 dark:hover:bg-gray-800 transition flex-1 px-4 ">
+           <ThumbsUp  className=" bg-transparent"
+           
+             
+             
+             
+             
+           />
+           
+
+         </div>
+         <div className="border    h-8 dark:border-slate-500  " ></div>
+         <div   className="flex rounded-r-[30px] fade-in-5 hover:bg-gray-200/85   items-center gap-2 p-3 dark:hover:bg-gray-800 transition flex-1 px-4 ">
+           <ThumbsDown className="!border-0 !outline-0"
+              fill={relation === "disliked" ? "rgb(235, 0, 129)" : "none"}
+              
+          
+           />
+
+
+         </div>
+
+       </div>
+       </Needtosignup>
+
+
+        )
+      }
+ 
+
+    </div>
+    
+
     <div className="flex gap-2 items-center w-full justify-between md:justify-normal">
       <div className="flex items-center gap-2 lg:gap-3 justify-between w-full">
       <Link href={`/profile/${user.clerkId}`}>
@@ -163,13 +231,13 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
 
         </div>
         </Link>
-        <div className="flex items-center gap-3">
-          <div className=" items-center rounded-[30px] dark:bg-gray-900 border cursor-pointer hidden md:flex ">
+        <div className="flex items-center gap-3 rounded-[30px]">
+          {curruser ? ( <div className=" items-center rounded-[30px] border-[rgba(23,23,22,0.71)] dark:bg-gray-900 dark:border-[rgba(255,255,255,0.231)] border cursor-pointer hidden md:flex ">
             
             <div   onClick={togglelike} className="flex rounded-l-[30px] fade-in-5   items-center gap-2 p-3 
-            hover:bg-gray-200 dark:hover:bg-gray-800 transition flex-1 px-4">
+            hover:bg-gray-200 dark:hover:bg-gray-800 transition flex-1 px-4 ">
               <ThumbsUp  className=" bg-transparent"
-                fill={relation === "liked" ?"#eb0081":"none" }
+                fill={relation === "liked" ?"#db2777":"none" }
                 
                 
                 
@@ -178,10 +246,10 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
               <p className="font-medium tracking-tight text-sm">{videolikes}</p>
 
             </div>
-            <div className="border    h-8 dark:border-slate-500  " ></div>
+            <div className="border    h-8 dark:border-slate-500 border-[rgba(23,23,22,0.71)]   " ></div>
             <div  onClick={toggledislike} className="flex rounded-r-[30px] fade-in-5 hover:bg-gray-200/85   items-center gap-2 p-3 dark:hover:bg-gray-800 transition flex-1 px-4 ">
               <ThumbsDown className="!border-0 !outline-0"
-                 fill={relation === "disliked" ? "rgb(235, 0, 129)" : "none"}
+                 fill={relation === "disliked" ? "#db2777" : "none"}
                  
              
               />
@@ -189,7 +257,40 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
 
             </div>
 
-          </div>
+          </div>):(
+            <Needtosignup className="rounded-[30px]">
+
+           
+             <div className="border-[rgba(23,23,22,0.71)] dark:border-slate- items-center rounded-[30px] dark:bg-gray-900 dark-border-[rgba(255,255,255,0.231)] border cursor-pointer hidden md:flex ">
+            
+             <div    className="flex rounded-l-[30px] fade-in-5   items-center gap-2 p-3 
+             hover:bg-gray-200 dark:hover:bg-gray-800 transition flex-1 px-4 ">
+               <ThumbsUp  className=" bg-transparent"
+               
+                 
+                 
+                 
+                 
+               />
+               
+ 
+             </div>
+             <div className="border    h-8 dark:border-slate-500  " ></div>
+             <div   className="flex rounded-r-[30px] fade-in-5 hover:bg-gray-200/85   items-center gap-2 p-3 dark:hover:bg-gray-800 transition flex-1 px-4 ">
+               <ThumbsDown className="!border-0 !outline-0"
+                  fill={relation === "disliked" ? "#db2777" : "none"}
+                  
+              
+               />
+ 
+ 
+             </div>
+ 
+           </div>
+           </Needtosignup>
+
+          )}
+         
 
           {isOwnerOfVideo() ? (
             <DropdownMenu>
@@ -226,9 +327,15 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
           )}
 
         </div>
+     
 
       </div>
     </div>
+
+   
+  
+
+    </>
   );
 };
 

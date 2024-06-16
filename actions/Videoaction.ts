@@ -211,12 +211,12 @@ revalidatePath("/","page");
       } else {
         await Video.updateOne(
           { _id: video._id },
-          { $push: { DisposableStacklikes: user?._id } }
+          { $push: { dislikes: user?._id } }
         );
         if (likeStatus === "liked") {
           await Video.updateOne(
             { _id: video._id },
-            { $pull: { dislikes: user?._id } }
+            { $pull: { likes: user?._id } }
           );
         }
       }

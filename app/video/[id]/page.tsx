@@ -36,13 +36,13 @@ const VideoPage = async ({ params }: any) => {
     const curruserdata = await currentUser();
     const Commentdetails: any = await getComments(id)
 
-    const curruser = JSON.parse(JSON.stringify(curruserdata));
+    const curruser =await JSON.parse(JSON.stringify(curruserdata));
 
     const videodata = await getVideo(id);
     const userdata = await getUser(videodata?.clerkId);
 
-    const user = JSON.parse(JSON.stringify(userdata));
-    const video = JSON.parse(JSON.stringify(videodata));
+    const user = await JSON.parse(JSON.stringify(userdata));
+    const video =await JSON.parse(JSON.stringify(videodata));
 
     const isFollowing = await FollowStatus(curruser?.id, user?.clerkId);
     const relationship = await likedstatus(curruser?.id,video._id);
