@@ -33,10 +33,7 @@ const UserSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
-    liked: {
-        type: Array,
-        default: []
-    },
+  
     verified: {
         type: Boolean,
         default: false

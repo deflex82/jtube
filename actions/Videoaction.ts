@@ -116,8 +116,114 @@ revalidatePath("/","page");
 
 
     
-
+    export const likedstatus = async (userId: string, videoId: string) => {
+      try {
+        const userdata = await User.findOne({ clerkId: userId });
+        const videodata = await Video.findOne({ _id: videoId });
+        
+       
+        const video = await JSON.parse(JSON.stringify(videodata));
+            
+        const user= await JSON.parse(JSON.stringify(userdata));
+        if (!user || !videodata) {
+          throw new Error('User or Video not found');
+        }
+    
+        if (video?.likes?.includes(user._id)) {
+          return "liked";
+        } else if (video?.dislikes?.includes(user._id)) {
+          return "disliked";
+        } else {
+          return "clean";
+        }
+      } catch (err) {
+        console.error(err);
+        return "error";
+      }
+    };
+    
 
   
 
   export {uploadaction};
+
+
+
+  export const togglelikeunlike = async (formdata: FormData) => {
+    try {
+      const userId: any = formdata.get("userId");
+      const videoId: any = formdata.get("videoId");
+      const user = await User.findOne({ clerkId: userId });
+      const videodata = await Video.findOne({ _id: videoId });
+  
+      if (!user || !videodata) {
+        throw new Error('User or Video not found');
+      }
+  
+      const video: any = await JSON.parse(JSON.stringify(videodata));
+      const likeStatus = await likedstatus(userId, videoId);
+      console.log(likeStatus);
+  
+      if (likeStatus === "liked") {
+        await Video.updateOne(
+          { _id: video._id },
+          { $pull: { likes: user?._id } }
+        );
+      } else {
+        await Video.updateOne(
+          { _id: video._id },
+          { $push: { likes: user?._id } }
+        );
+        if (likeStatus === "disliked") {
+          await Video.updateOne(
+            { _id: video._id },
+            { $pull: { dislikes: user?._id } }
+          );
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+   // Adjust the import based on your project structure
+
+  export const togglecondemn = async (formdata: FormData) => {
+    try {
+      const userId: any = formdata.get("userId");
+      const videoId: any = formdata.get("videoId");
+      const user = await User.findOne({ clerkId: userId });
+      const videodata = await Video.findOne({ _id: videoId });
+  
+      if (!user || !videodata) {
+        throw new Error('User or Video not found');
+      }
+  
+      const video: any = await JSON.parse(JSON.stringify(videodata));
+      const likeStatus = await likedstatus(userId, videoId);
+      console.log(likeStatus);
+  
+      if (likeStatus === "disliked") {
+        await Video.updateOne(
+          { _id: video._id },
+          { $pull: { dislikes: user?._id } }
+        );
+      } else {
+        await Video.updateOne(
+          { _id: video._id },
+          { $push: { DisposableStacklikes: user?._id } }
+        );
+        if (likeStatus === "liked") {
+          await Video.updateOne(
+            { _id: video._id },
+            { $pull: { dislikes: user?._id } }
+          );
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+
+
+  }

@@ -18,6 +18,7 @@ import { SkeletonCard } from "@/components/SkeletonCard";
 import dynamic from "next/dynamic";
 import { SkeletonDetails } from "@/components/DetailsSkeleton";
 import Header from "@/components/Header";
+import { likedstatus } from "@/actions/Videoaction";
 
 const VideoDetails = dynamic(() => import('@/components/ui/VideoDetails'), {
     ssr: false,
@@ -43,7 +44,10 @@ const VideoPage = async ({ params }: any) => {
     const user = JSON.parse(JSON.stringify(userdata));
     const video = JSON.parse(JSON.stringify(videodata));
 
-    const isFollowing = await FollowStatus(curruser?.id, user?.clerkId)
+    const isFollowing = await FollowStatus(curruser?.id, user?.clerkId);
+    const relationship = await likedstatus(curruser?.id,video._id);
+    console.log(relationship);
+
 
 
     return (
@@ -56,7 +60,7 @@ const VideoPage = async ({ params }: any) => {
                 <div className="flex flex-col gap-3 w-full">
                     <h1 className="font-semibold p-1 text-2xl flex-wrap">{video?.title}</h1>
                 
-                        <VideoDetails isFollowing={isFollowing} user={user} curruser={curruser} videoid={id} />
+                        <VideoDetails likes={video?.likes?.length} relationship={relationship} isFollowing={isFollowing} user={user} curruser={curruser} videoid={id} />
 
                     
 
