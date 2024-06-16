@@ -3,6 +3,7 @@ const isProtectedRoute = createRouteMatcher([
   '/upload(.*)',
   '/forum(.*)',
   '/profile(.*)'
+  
 ]);
 
 export default clerkMiddleware(
