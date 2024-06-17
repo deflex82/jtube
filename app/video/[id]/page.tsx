@@ -60,7 +60,7 @@ const VideoPage = async ({ params }: any) => {
                 <div className="flex flex-col gap-3 w-full">
                     <h1 className="font-semibold p-1 text-2xl flex-wrap">{video?.title}</h1>
                 
-                        <VideoDetails likes={video?.likes?.length} relationship={relationship} isFollowing={isFollowing} user={user} curruser={curruser} videoid={id} />
+                        <VideoDetails dislikes={video?.dislikes?.length} likes={video?.likes?.length} relationship={relationship} isFollowing={isFollowing} user={user} curruser={curruser} videoid={id} />
 
                     
 

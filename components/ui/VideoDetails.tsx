@@ -18,11 +18,12 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { togglecondemn, togglelikeunlike } from "@/actions/Videoaction";
 
-const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes }: any) => {
+const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes ,dislikes}: any) => {
   const [followers, setFollowers] = useState<any>(null);
   const [following, setFollowing] = useState<any>(null);
   const [relation,setrelationship] = useState("");
-  const [videolikes,setliked] = useState<any>(null);
+  const [liked,setliked] = useState<any>(null);
+  const [disliked,setdislikes] = useState<any>(null);
 
   const handlefollowing = useCallback(() => {
     setFollowing(isFollowing)
@@ -37,7 +38,8 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
   const handleFollowers = useCallback(() => {
     setFollowers(user?.Followers?.length);
     setliked(likes)
-  }, [user.Followers,likes]);
+    setdislikes(dislikes);
+  }, [user.Followers,likes,dislikes]);
 
   useEffect(() => {
     handleFollowers();
@@ -73,7 +75,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
   
     try{
       if(relation=="liked"){
-        setliked(videolikes -1);
+        setliked(liked -1);
         setrelationship("clean");
         const formdata  = new FormData();
         formdata.append("userId",curruser?.id);
@@ -81,7 +83,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
         await togglelikeunlike(formdata);
       }
       else if(relation=="clean"){
-        setliked(videolikes +1);
+        setliked(liked +1);
         setrelationship("liked");
         const formdata  = new FormData();
         formdata.append("userId",curruser?.id);
@@ -89,7 +91,8 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
         await togglelikeunlike(formdata);
       }
       else{
-        setliked(videolikes +1);
+        setliked(liked +1);
+        setdislikes(disliked -1);
         setrelationship("liked");
         const formdata  = new FormData();
         formdata.append("userId",curruser?.id);
@@ -108,6 +111,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
  
     try{
       if(relation=="disliked"){
+        setdislikes(disliked -1);
         setrelationship("clean");
         const formdata  = new FormData();
         formdata.append("userId",curruser?.id);
@@ -116,6 +120,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
       }
       else if(relation=="clean"){
         setrelationship("disliked");
+        setdislikes(disliked +1)
         const formdata  = new FormData();
         formdata.append("userId",curruser?.id);
         formdata.append("videoId",videoid);
@@ -123,7 +128,8 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
 
       }
      else{
-      setliked(videolikes -1);
+      setliked(liked -1);
+      setdislikes(disliked +1);
       setrelationship("disliked");
       const formdata  = new FormData();
         formdata.append("userId",curruser?.id);
@@ -151,7 +157,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
             
             
           />
-          <p className="font-medium tracking-tight text-sm">{videolikes}</p>
+          <p className="font-medium tracking-tight text-sm">{likes}</p>
 
         </div>
         <div className="border    h-8 border-gray-700 dark:border-slate-500  " ></div>
@@ -161,6 +167,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
              
          
           />
+                   <p className="font-medium tracking-tight text-sm">{disliked}</p>
 
 
         </div>
@@ -180,6 +187,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
              
              
            />
+             <p className="font-medium tracking-tight text-sm">{likes}</p>
            
 
          </div>
@@ -190,7 +198,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
               
           
            />
-
+  <p className="font-medium tracking-tight text-sm">{disliked}</p>
 
          </div>
 
@@ -232,18 +240,19 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
         </div>
         </Link>
         <div className="flex items-center gap-3 rounded-[30px]">
-          {curruser ? ( <div className=" items-center rounded-[30px] border-[rgba(23,23,22,0.71)] dark:bg-gray-900 dark:border-[rgba(255,255,255,0.231)] border cursor-pointer hidden md:flex ">
+          {curruser ? ( <div className=" items-center rounded-[30px]  bg-[rgb(255,255,255)] border-[rgba(23,23,22,0.71)] dark:bg-gray-900 dark:border-[rgba(255,255,255,0.231)] border cursor-pointer hidden md:flex ">
             
             <div   onClick={togglelike} className="flex rounded-l-[30px] fade-in-5   items-center gap-2 p-3 
-            hover:bg-gray-200 dark:hover:bg-gray-800 transition flex-1 px-4 ">
+            hover:bg-gray-200 dark:hover:bg-gray-800 transition flex-1 px-4  ">
               <ThumbsUp  className=" bg-transparent"
                 fill={relation === "liked" ?"#db2777":"none" }
+              
                 
                 
                 
                 
               />
-              <p className="font-medium tracking-tight text-sm">{videolikes}</p>
+              <p className="font-medium tracking-tight text-sm">{liked}</p>
 
             </div>
             <div className="border    h-8 dark:border-slate-500 border-[rgba(23,23,22,0.71)]   " ></div>
@@ -253,7 +262,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
                  
              
               />
-
+  <p className="font-medium tracking-tight text-sm">{disliked}</p>
 
             </div>
 
@@ -272,17 +281,18 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
                  
                  
                />
+                 <p className="font-medium tracking-tight text-sm">{liked}</p>
                
  
              </div>
-             <div className="border    h-8 dark:border-slate-500  " ></div>
+             <div className="border    h-8 dark:border-slate-500  bg-gray-400  " ></div>
              <div   className="flex rounded-r-[30px] fade-in-5 hover:bg-gray-200/85   items-center gap-2 p-3 dark:hover:bg-gray-800 transition flex-1 px-4 ">
                <ThumbsDown className="!border-0 !outline-0"
                   fill={relation === "disliked" ? "#db2777" : "none"}
                   
               
                />
- 
+   <p className="font-medium tracking-tight text-sm">{disliked}</p>
  
              </div>
  
