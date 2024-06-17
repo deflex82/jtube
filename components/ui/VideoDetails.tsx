@@ -157,7 +157,7 @@ const VideoDetails = ({ user, curruser, videoid, isFollowing, relationship,likes
             
             
           />
-          <p className="font-medium tracking-tight text-sm">{likes}</p>
+          <p className="font-medium tracking-tight text-sm">{liked}</p>
 
         </div>
         <div className="border    h-8 border-gray-700 dark:border-slate-500  " ></div>
