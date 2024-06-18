@@ -95,7 +95,7 @@ const handleSubmit = async (e: any) => {
 
     toast({
       title:"Your video has been uploaded succesfully",
-      description:<p className='text-red-600 font-medium'>You will be redirected to home page shortly</p>
+      description:<p className='text-red-600 font-medium'>You will be redirected to your video shortly</p>
     })
     
   } catch (error:any) {

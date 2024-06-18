@@ -1,4 +1,4 @@
-import { FollowStatus } from "@/actions/useraction";
+
 import FollowProfileButton from "@/components/FollowProfileButton";
 import { SkeletonCard } from "@/components/SkeletonCard";
 import convertToMonthYear from "@/lib/ConvertMonth";
@@ -24,8 +24,8 @@ const Profile = async ({ params }: any) => {
     const user = JSON.parse(JSON.stringify(userdata));
     const curruserdata = await currentUser();
     const curruser = JSON.parse(JSON.stringify(curruserdata));
-    const isFollowing = await FollowStatus(curruser?.id, user?.clerkId);
-   
+    const isfollowing = user.Followers.includes(curruser?._id)? true:false
+
     const self = () => {
         if (curruser?.id == user.clerkId) {
             return true;
@@ -58,7 +58,7 @@ const Profile = async ({ params }: any) => {
 
                     <Image alt="profile image" src={user?.ImageUrl} height={120} width={120} className="object-cover rounded-full  " />
                     {!self() &&
-                        (<FollowProfileButton isFollowing={isFollowing} curruser={curruser} user={user} />)}
+                        (<FollowProfileButton isFollowing={isfollowing} curruser={curruser} user={user} />)}
 
 
 

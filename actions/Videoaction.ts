@@ -81,7 +81,7 @@ const uploadaction=async(formdata:FormData)=>{
 
         await connectiontodb();
        
-        await Video.create({
+       var newvideo= await Video.create({
             clerkId:userId,
             VideoUrl:video,
             Thumbnail:image,
@@ -104,7 +104,7 @@ const uploadaction=async(formdata:FormData)=>{
 
     }
 revalidatePath("/","page");
-    redirect("/");
+    redirect(`/video/${newvideo._id}`);
 
 
     
