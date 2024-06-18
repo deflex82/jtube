@@ -13,11 +13,11 @@ import { currentUser } from "@clerk/nextjs/server";
 import { Suspense } from "react";
 
 import { FollowStatus } from "@/actions/useraction";
-import { SkeletonCard } from "@/components/SkeletonCard";
+
 
 import dynamic from "next/dynamic";
 import { SkeletonDetails } from "@/components/DetailsSkeleton";
-import Header from "@/components/Header";
+
 import { likedstatus } from "@/actions/Videoaction";
 
 const VideoDetails = dynamic(() => import('@/components/ui/VideoDetails'), {
@@ -46,8 +46,7 @@ const VideoPage = async ({ params }: any) => {
 
     const isFollowing = await FollowStatus(curruser?.id, user?.clerkId);
     const relationship = await likedstatus(curruser?.id,video._id);
-    console.log(relationship);
-
+ 
 
 
     return (

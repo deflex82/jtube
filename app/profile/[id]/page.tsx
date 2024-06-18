@@ -7,19 +7,17 @@ import processFullname from "@/lib/processfullname";
 import { CloudUpload } from 'lucide-react';
 import { currentUser } from "@clerk/nextjs/server";
 import { ArrowLeft, Calendar, VerifiedIcon } from "lucide-react";
-import dynamic from "next/dynamic";
+
 import Image from "next/image";
 import { Suspense } from "react";
 import Link from "next/link";
 
+import Video from "@/components/Video";
 
 
 
-const Video = dynamic(() => import('@/components/Video'), {
-    ssr: false,
-    loading: () => <SkeletonCard />, // Use the skeleton component while loading
-  });
-  
+
+
 const Profile = async ({ params }: any) => {
     const id = params.id;
     const userdata = await getUser(id);
@@ -102,7 +100,7 @@ const Profile = async ({ params }: any) => {
                     <h1 className="text-xl font-semibold"> videos</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-y-2 w-full">
 
-                    <Suspense fallback = {<SkeletonCard />}>
+                    <Suspense fallback = {< SkeletonCard/>}>
         {
           Videos?.map(video=>{
             

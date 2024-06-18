@@ -10,8 +10,7 @@ import { Button } from '@/components/FormButton';
 import { UploadCloudIcon, Video } from 'lucide-react';
 import Image from 'next/image';
 import { useToast } from '@/components/ui/use-toast';
-import { redirect } from 'next/navigation';
-import Header from '@/components/Header';
+
 
 
 
