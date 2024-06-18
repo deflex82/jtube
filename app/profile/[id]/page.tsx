@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import Video from "@/components/Video";
+import NavigationButton from "@/components/NavigationButton";
 
 
 
@@ -43,7 +44,7 @@ const Profile = async ({ params }: any) => {
             <div className="w-full flex flex-col ">
                 <div className="flex items-center gap-8">
                     <Link href={"/"}>
-                    <ArrowLeft />
+                        <NavigationButton/>
                     </Link>
                    
                     <div className="flex  flex-col ">
